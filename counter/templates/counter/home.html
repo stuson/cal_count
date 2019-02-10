@@ -1,0 +1,8 @@
+{% extends 'counter/base.html' %}
+
+{% block content %}
+{% for food in foods %}
+    <h1>{{ food.food }}</h1>
+    <h2>{{ food.amount }}</h2>
+{% endfor %}
+{% endblock content %}

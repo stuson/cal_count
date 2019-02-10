@@ -15,7 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from counter import views as counter_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', counter_views.RecentDaysView.as_view(), name='home'),
 ]
