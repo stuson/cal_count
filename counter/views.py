@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
+from django.contrib.auth.models import User
 from .models import (
     Food,
     FoodInstance,
@@ -11,3 +12,6 @@ class RecentDaysView(ListView):
     context_object_name = 'foods'
     paginate_by = 5
     template_name = 'counter/home.html'
+
+    def get_queryset(self):
+        return FoodInstance.objects.filter(user=self.request.user)
