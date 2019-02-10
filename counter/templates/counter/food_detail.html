@@ -1,0 +1,12 @@
+{% extends 'counter/base.html' %}
+{% block content %}
+<h1>{{ food.name }}</h1>
+<h2>Nutritional Values <span class="text-muted">per 100g</span></h2>
+<ul>
+    <li>Energy <small class="text-muted">{{ food.energy|floatformat }}g</small></li>
+    <li>Carbohydrate <small class="text-muted">{{ food.carbohydrate|floatformat }}g</small></li>
+    <li>Protein <small class="text-muted">{{ food.protein|floatformat }}g</small></li>
+    <li>Fat <small class="text-muted">{{ food.fat|floatformat }}g</small></li>
+    <li>Sodium <small class="text-muted">{{ food.sodium|floatformat }}mg</small></li>
+</ul>
+{% endblock content %}
