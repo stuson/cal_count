@@ -1,8 +1,29 @@
 {% extends 'counter/base.html' %}
-
 {% block content %}
-{% for food in foods %}
-    <h1>{{ food.food }}</h1>
-    <h2>{{ food.amount }}</h2>
+{% regroup foodInstances by date as date_list %}
+{% for date in date_list %}
+    <div class="media border border-primary rounded bg-light my-2 p-2">
+        <div class="col-4 bg-primary text-light h-100">
+            <h2 class="my-0">{{ date.grouper|date:"D dS" }}</h2>
+        </div>
+        <div class="media-body col-8">
+            {% for foodInst in date.list %}
+                <div class="media">
+                    <div class="col-5">
+                        <h3>{{ foodInst.food.name }}</h2>
+                        <small class="text-muted">{{ foodInst.amount }}g</small>
+                    </div>
+                    <div class="media-body col-7">
+                        <ul class="list-unstyled">
+                            <li><strong>Energy</strong> <small class="text-muted">{{ foodInst.totals.energy|floatformat:0 }}kcal</small></li>
+                            <li><strong>Carbohydrate</strong> <small class="text-muted">{{ foodInst.totals.carbohydrate|floatformat:1 }}g</small></li>
+                            <li><strong>Protein</strong> <small class="text-muted">{{ foodInst.totals.protein|floatformat:1 }}g</small></li>
+                            <li><strong>Fat</strong> <small class="text-muted">{{ foodInst.totals.protein|floatformat:1 }}g</small></li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endfor %}
 {% endblock content %}

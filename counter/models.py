@@ -13,7 +13,7 @@ class Food(models.Model):
     protein = models.DecimalField(max_digits=5, decimal_places=2, null=False) # g / 100g
     fat = models.DecimalField(max_digits=5, decimal_places=2, null=False) # g / 100g
     fibre = models.DecimalField(max_digits=5, decimal_places=2, null=False) # g / 100g
-    sodium = models.DecimalField(max_digits=4, decimal_places=2, null=False) # g / 100g
+    sodium = models.DecimalField(max_digits=4, decimal_places=2, null=False) # mg / 100g
 
     def __str__(self):
         return self.name
@@ -31,5 +31,19 @@ class FoodInstance(models.Model):
     date = models.DateField(default=timezone.now)
     amount = models.IntegerField() # g
 
+    @property
+    def totals(self):
+        return {
+            'energy': get_total(self.amount, self.food.energy),
+            'carbohydrate': get_total(self.amount, self.food.carbohydrate),
+            'protein': get_total(self.amount, self.food.protein),
+            'fat': get_total(self.amount, self.food.fat),
+            'fibre': get_total(self.amount, self.food.fibre),
+            'sodium': get_total(self.amount, self.food.sodium)
+        }
+
     def __str__(self):
         return f'{self.food} - {self.date}'
+
+def get_total(amount, per100):
+    return (amount / 100) * float(per100)
