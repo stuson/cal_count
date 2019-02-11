@@ -1,14 +1,14 @@
 {% extends 'counter/base.html' %}
 {% block content %}
-{% regroup foodInstances by date as date_list %}
-{% for date in date_list %}
-    <div class="row bg-light border border-info my-2 p-2">
+{% for date in dates %}
+    <div class="row bg-light border border-info rounded my-2">
         <div class="col-3 bg-primary text-light p-2">
-            <h2 class="my-0">{{ date.grouper|date:"D dS" }}</h2>
+            <h2 class="my-0">{{ date.date|date:"D dS" }}</h2>
+            <h4 class="text-info">{{ date.day_totals.energy|floatformat:0 }}kcal</h4>
         </div>
         <div class="col-9">
-            {% for foodInst in date.list %}
-                <div class="media">
+            {% for foodInst in date.foodInstances %}
+                <div class="media mb-2 {% if forloop.last is False %}border-bottom border-secondary{% endif %}">
                     <div class="col-5">
                         <h3><a href="{% url 'food_detail' foodInst.food.pk %}">{{ foodInst.food.name }}</a></h3>
                         <small class="text-muted">{{ foodInst.amount }}g</small>
